@@ -20,7 +20,7 @@ export default class KeyboardScreen extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = { text: "What is up" };
+    this.state = { text: "" };
   }
 
   render() {
@@ -45,14 +45,20 @@ export default class KeyboardScreen extends React.Component {
           </View>
         </View>
         <ScrollView contentContainerStyle={styles.contentContainer}>
+          <View style={styles.section}>
             {this.renderKeys()}
+          </View>
+          <View style={styles.section}>
             <Key text="the" handleKeyPress={() => this.handleKeyPress('the')}colour="grey" type="word" />
             <Key text="pain" handleKeyPress={() => this.handleKeyPress('pain')}  colour="red" type="word" />
+          </View>
+          <View style={styles.section}>
             <Key text="Max" handleKeyPress={() => this.handleKeyPress('Max')} type="word" />
             <Key text="Zoe" handleKeyPress={() => this.handleKeyPress('Zoe')} type="word"/>
             <Key text="Koby" handleKeyPress={() => this.handleKeyPress('Koby')} type="word"/>
             <Key text="Rachel" handleKeyPress={() => this.handleKeyPress('Rachel')} type="word"/>
             <Key text="Jakob" handleKeyPress={() => this.handleKeyPress('Jakob')} type="word"/>
+          </View>
         </ScrollView>
       </View>
     );
@@ -92,6 +98,12 @@ const styles = StyleSheet.create({
     padding: 20,
     minHeight: 100,
   },
+  section: {
+    paddingBottom: 20,
+    flex: 1,
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+  },
   columnsWrapper: {
     flexDirection: 'row',
   },
@@ -104,9 +116,6 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   contentContainer: {
-    flex: 1,
-    flexDirection: 'row',
-    flexWrap: 'wrap',
     padding: 10,
   },
 });
