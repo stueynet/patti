@@ -46,13 +46,13 @@ export default class KeyboardScreen extends React.Component {
         </View>
         <ScrollView contentContainerStyle={styles.contentContainer}>
             {this.renderKeys()}
-            <Key text="the" handleKeyPress={() => this.handleKeyPress('the')}buttonColour="yellow" />
-            <Key text="pain" handleKeyPress={() => this.handleKeyPress('pain')}  buttonColour="yellow" />
-            <Key text="Max" handleKeyPress={() => this.handleKeyPress('Max')} />
-            <Key text="Zoe" handleKeyPress={() => this.handleKeyPress('Zoe')} />
-            <Key text="Koby" handleKeyPress={() => this.handleKeyPress('Koby')} />
-            <Key text="Rachel" handleKeyPress={() => this.handleKeyPress('Rachel')} />
-            <Key text="Jakob" handleKeyPress={() => this.handleKeyPress('Jakob')} />
+            <Key text="the" handleKeyPress={() => this.handleKeyPress('the')}colour="grey" type="word" />
+            <Key text="pain" handleKeyPress={() => this.handleKeyPress('pain')}  colour="red" type="word" />
+            <Key text="Max" handleKeyPress={() => this.handleKeyPress('Max')} type="word" />
+            <Key text="Zoe" handleKeyPress={() => this.handleKeyPress('Zoe')} type="word"/>
+            <Key text="Koby" handleKeyPress={() => this.handleKeyPress('Koby')} type="word"/>
+            <Key text="Rachel" handleKeyPress={() => this.handleKeyPress('Rachel')} type="word"/>
+            <Key text="Jakob" handleKeyPress={() => this.handleKeyPress('Jakob')} type="word"/>
         </ScrollView>
       </View>
     );
