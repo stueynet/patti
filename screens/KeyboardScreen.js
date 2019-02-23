@@ -30,8 +30,8 @@ export default class KeyboardScreen extends React.Component {
           <Text style={styles.text}>{this.state.text}</Text>
         </View>
         <ScrollView contentContainerStyle={styles.contentContainer}>
-            <Key text="Clear" handleKeyPress={this.handleClear} />
-            <Key text="Back" handleKeyPress={this.handleBack} />
+            <Key text="Clear" handleKeyPress={this.handleClear} buttonColour="red" />
+            <Key text="Back" handleKeyPress={this.handleBack}  buttonColour="yellow" />
             {this.renderKeys()}
         </ScrollView>
       </View>
@@ -46,7 +46,6 @@ export default class KeyboardScreen extends React.Component {
   }
 
   handleKeyPress = (text) => {
-    console.log(text);
     return this.setState({text: this.state.text + " " + text});
   }
 
@@ -78,8 +77,8 @@ const styles = StyleSheet.create({
   },
   contentContainer: {
     flex: 1,
-    justifyContent: 'center',
     flexDirection: 'row',
     flexWrap: 'wrap',
+    padding: 10,
   },
 });

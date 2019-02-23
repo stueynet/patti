@@ -15,6 +15,7 @@ export default class Key extends React.Component {
 }
 Key.defaultProps = {
   text: "???",
+  buttonColour: "blue"
 };
 
 const styles = StyleSheet.create({
