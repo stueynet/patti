@@ -8,7 +8,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import { WebBrowser } from 'expo';
+import { Icon } from 'expo';
 
 import { MonoText } from '../components/StyledText';
 import Key from '../components/Key';
@@ -27,12 +27,32 @@ export default class KeyboardScreen extends React.Component {
     return (
       <View style={styles.container}>
         <View style={styles.textWrapper}>
-          <Text style={styles.text}>{this.state.text}</Text>
+          <View style={styles.columnsWrapper}>
+            <Text style={styles.text}>{this.state.text}</Text>
+            <View style={styles.clearWrapper}>
+             <Icon.Ionicons
+                name="ios-remove-circle-outline"
+                size={72}
+                onPress={this.handleBack}
+                style={{marginRight: 10}}
+              />
+              <Icon.Ionicons
+                name="ios-close-circle-outline"
+                size={72}
+                onPress={this.handleClear}
+              />             
+            </View>
+          </View>
         </View>
         <ScrollView contentContainerStyle={styles.contentContainer}>
-            <Key text="Clear" handleKeyPress={this.handleClear} buttonColour="red" />
-            <Key text="Back" handleKeyPress={this.handleBack}  buttonColour="yellow" />
             {this.renderKeys()}
+            <Key text="the" handleKeyPress={() => this.handleKeyPress('the')}buttonColour="yellow" />
+            <Key text="pain" handleKeyPress={() => this.handleKeyPress('pain')}  buttonColour="yellow" />
+            <Key text="Max" handleKeyPress={() => this.handleKeyPress('Max')} />
+            <Key text="Zoe" handleKeyPress={() => this.handleKeyPress('Zoe')} />
+            <Key text="Koby" handleKeyPress={() => this.handleKeyPress('Koby')} />
+            <Key text="Rachel" handleKeyPress={() => this.handleKeyPress('Rachel')} />
+            <Key text="Jakob" handleKeyPress={() => this.handleKeyPress('Jakob')} />
         </ScrollView>
       </View>
     );
@@ -67,13 +87,21 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   textWrapper: {
-    backgroundColor: 'grey',
+    backgroundColor: '#EFEFEF',
     justifyContent: 'center',
     padding: 20,
     minHeight: 100,
   },
+  columnsWrapper: {
+    flexDirection: 'row',
+  },
+  clearWrapper: {
+    alignSelf: 'flex-end',
+    flexDirection: 'row',
+  },
   text: {
-    fontSize: 20,
+    fontSize: 30,
+    flex: 1,
   },
   contentContainer: {
     flex: 1,

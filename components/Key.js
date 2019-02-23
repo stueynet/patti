@@ -24,8 +24,8 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         backgroundColor: 'blue',
         aspectRatio: 1,
-        width: 100,
-        height: 100,
+        width: 128,
+        height: 120,
         margin: 10,
     },
     buttonText: {
