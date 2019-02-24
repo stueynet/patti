@@ -10,8 +10,14 @@ export default class Key extends React.Component {
       const fontSize = this.getFontSize();
       console.log(fontSize);
 
+      const editMode = this.props.editing ? {border}
+
     return (
-    <TouchableOpacity style={[styles.container, {backgroundColor: this.props.colour}]} onPress={this.props.handleKeyPress}>
+    <TouchableOpacity 
+        style={[styles.container, {backgroundColor: this.props.colour}]} 
+        onPress={this.props.handleKeyPress}
+        onLongPress={this.props.handleLongPress}
+    >
          <Text style={[styles.default, {fontSize}]}>{this.props.label}</Text>
     </TouchableOpacity>
     );

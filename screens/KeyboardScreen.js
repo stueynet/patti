@@ -79,6 +79,7 @@ export default class KeyboardScreen extends React.Component {
         </View>
         <ScrollView contentContainerStyle={styles.contentContainer}>
           {this.renderButtons()}
+          {this.renderEditMode()}
         </ScrollView>
         <View style={styles.newButton}>
             <Icon.Ionicons
@@ -102,18 +103,47 @@ export default class KeyboardScreen extends React.Component {
     )
   }
 
+  renderEditMode = () => {
+    if (! this.state.editMode) {
+      return null;
+    }
+
+    return (
+      <View style={styles.editMode}>
+        <Text>You are currently editing the button layout</Text>
+        <Icon.Ionicons
+          name="ios-close-circle-outline"
+          size={32}
+          onPress={this.handleDisableEditMode}
+        />     
+      </View>
+    )
+  };
+
   handleKeyPress = (text) => {
     return this.setState({text: this.state.text + " " + text});
+  }
+
+  handleLongPress = () => {
+    return this.setState(prevState => ({
+      editMode: !prevState.editMode,
+    }));
+  }
+
+  handleDisableEditMode = () => {
+    return this.setState(prevState => ({
+      editMode: false,
+    }));
   }
 
   handleBack = () => {
     const theString = this.state.text;
     const newText = theString.slice(0, -1);
-    return this.setState({text: newText});
+    return this.setState(prevState => ({text: newText}));
   }
 
   handleClear = () => {
-    return this.setState({text: ""});
+    return this.setState(prevState => ({text: ""}));
   }
 
   renderButton = (button) => {
@@ -121,7 +151,7 @@ export default class KeyboardScreen extends React.Component {
       return <Text key={button.id}>{button.label}</Text>
     }
 
-    return <Key key={button.value} label={button.label} handleKeyPress={() => this.handleKeyPress(button.value)} colour={button.colour} />;
+    return <Key key={button.value} label={button.label} handleKeyPress={() => this.handleKeyPress(button.value)} handleLongPress = {this.handleLongPress} colour={button.colour} />;
   } 
 
   handleAddButton = (button) => {
@@ -163,5 +193,11 @@ const styles = StyleSheet.create({
     position: 'absolute',
     right: 10,
     bottom: 10,
+  },
+  editMode: {
+    padding: 20,
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
   }
 });
