@@ -14,6 +14,12 @@ import { MonoText } from '../components/StyledText';
 import Key from '../components/Key';
 import Section from '../components/Section';
 
+const newButton = {
+  label: "new",
+  value: "new",
+  colour: 'pink',
+}
+
 export default class KeyboardScreen extends React.Component {
   static navigationOptions = {
     header: null,
@@ -22,36 +28,31 @@ export default class KeyboardScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = { 
-      letters:["a", "b", "c", "d", "e", "f", "g", "h", "i"],
       editMode: false,
       text: "",
-      sections: [
+      buttons: [
         {
           id: 1,
-          order: 1,
-          buttons:[{
-            label: "a",
-            value: "a",
-          },
-          {
-            label: "b",
-            value: "b",
-          }],
+          label: "a",
+          value: "a",
         },
         {
           id: 2,
-          order: 2,
-          buttons: [{
-            label: "yes",
-            value: "yes",
-            colour: 'black',
-          },{
-            label: "no",
-            value: "no",
-            colour: 'black',
-          }],
+          label: "More stuff",
+          value: "b",
+          spacer: true,
+        },
+        {
+          id: 3,
+          label: "Koby",
+          value: "Koby",
+        },
+        {
+          id: 4,
+          label: "Max",
+          value: "Max",
         }
-      ]
+      ],
     };
   }
 
@@ -77,33 +78,28 @@ export default class KeyboardScreen extends React.Component {
           </View>
         </View>
         <ScrollView contentContainerStyle={styles.contentContainer}>
-          {this.renderSections()}
+          {this.renderButtons()}
         </ScrollView>
+        <View style={styles.newButton}>
+            <Icon.Ionicons
+                  name="ios-add-circle-outline"
+                  size={72}
+                  onPress={() => this.handleAddButton(newButton)}
+            />   
+          </View>
       </View>
     );
   }
 
-  renderSections() {
-     return this.state.sections.map(section => {
-            return <Section key={section.id}>
-              {this.renderButtons(section.buttons)}
-               <Icon.Ionicons
-                name="ios-add-circle-outline"
-                size={72}
-                onPress={() => this.handleAddButtonToSection(section.id, {
-            label: "new",
-            value: "new",
-            colour: 'pink',
-          })}
-              />         
-            </Section>
-          });
-  }
-
-  renderButtons(buttons) {
-    return buttons.map(button => {
-      return <Key key={button.value} text={button.label} handleKeyPress={() => this.handleKeyPress(button.value)} colour={button.colour} />
+  renderButtons() {
+    const buttons = this.state.buttons.map(button => {
+       return this.renderButton(button);
     });
+    return (
+      <Section>
+      {buttons}
+      </Section>
+    )
   }
 
   handleKeyPress = (text) => {
@@ -120,7 +116,15 @@ export default class KeyboardScreen extends React.Component {
     return this.setState({text: ""});
   }
 
-  handleAddButtonToSection = (sectionId, button) => {
+  renderButton = (button) => {
+    if(button.spacer) {
+      return <Text key={button.id}>{button.label}</Text>
+    }
+
+    return <Key key={button.value} label={button.label} handleKeyPress={() => this.handleKeyPress(button.value)} colour={button.colour} />;
+  } 
+
+  handleAddButton = (button) => {
     const sectionToUpdate = this.state.sections.find(section => section.id === sectionId);
     const sections = {...this.state.sections};
     sectionToUpdate.buttons.push(button);
@@ -155,4 +159,9 @@ const styles = StyleSheet.create({
   contentContainer: {
     padding: 10,
   },
+  newButton: {
+    position: 'absolute',
+    right: 10,
+    bottom: 10,
+  }
 });

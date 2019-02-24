@@ -6,12 +6,22 @@ import Colors from '../constants/Colors';
 
 export default class Key extends React.Component {
   render() {
+
+      const fontSize = this.getFontSize();
+      console.log(fontSize);
+
     return (
     <TouchableOpacity style={[styles.container, {backgroundColor: this.props.colour}]} onPress={this.props.handleKeyPress}>
-         <Text style={[styles.default, styles[this.props.type]]}>{this.props.text}</Text>
+         <Text style={[styles.default, {fontSize}]}>{this.props.label}</Text>
     </TouchableOpacity>
     );
   }
+
+  getFontSize(){
+        size = 30 * (1/(this.props.label.length / 5));
+        console.log(size);
+        return size > 64 ? 64 : size;   
+    }
 }
 Key.defaultProps = {
   text: "???",
