@@ -12,6 +12,7 @@ import { Icon } from 'expo';
 
 import { MonoText } from '../components/StyledText';
 import Key from '../components/Key';
+import Section from '../components/Section';
 
 export default class KeyboardScreen extends React.Component {
   static navigationOptions = {
@@ -20,7 +21,38 @@ export default class KeyboardScreen extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = { text: "" };
+    this.state = { 
+      letters:["a", "b", "c", "d", "e", "f", "g", "h", "i"],
+      editMode: false,
+      text: "",
+      sections: [
+        {
+          id: 1,
+          order: 1,
+          buttons:[{
+            label: "a",
+            value: "a",
+          },
+          {
+            label: "b",
+            value: "b",
+          }],
+        },
+        {
+          id: 2,
+          order: 2,
+          buttons: [{
+            label: "yes",
+            value: "yes",
+            colour: 'black',
+          },{
+            label: "no",
+            value: "no",
+            colour: 'black',
+          }],
+        }
+      ]
+    };
   }
 
   render() {
@@ -45,29 +77,32 @@ export default class KeyboardScreen extends React.Component {
           </View>
         </View>
         <ScrollView contentContainerStyle={styles.contentContainer}>
-          <View style={styles.section}>
-            {this.renderKeys()}
-          </View>
-          <View style={styles.section}>
-            <Key text="the" handleKeyPress={() => this.handleKeyPress('the')}colour="grey" type="word" />
-            <Key text="pain" handleKeyPress={() => this.handleKeyPress('pain')}  colour="red" type="word" />
-          </View>
-          <View style={styles.section}>
-            <Key text="Max" handleKeyPress={() => this.handleKeyPress('Max')} type="word" />
-            <Key text="Zoe" handleKeyPress={() => this.handleKeyPress('Zoe')} type="word"/>
-            <Key text="Koby" handleKeyPress={() => this.handleKeyPress('Koby')} type="word"/>
-            <Key text="Rachel" handleKeyPress={() => this.handleKeyPress('Rachel')} type="word"/>
-            <Key text="Jakob" handleKeyPress={() => this.handleKeyPress('Jakob')} type="word"/>
-          </View>
+          {this.renderSections()}
         </ScrollView>
       </View>
     );
   }
 
-  renderKeys() {
-    const letters = ["a", "b", "c", "d", "e", "f", "g", "h", "i"];
-    return letters.map(letter => {
-      return <Key key={letter} text={letter} handleKeyPress={() => this.handleKeyPress(letter)} />
+  renderSections() {
+     return this.state.sections.map(section => {
+            return <Section key={section.id}>
+              {this.renderButtons(section.buttons)}
+               <Icon.Ionicons
+                name="ios-add-circle-outline"
+                size={72}
+                onPress={() => this.handleAddButtonToSection(section.id, {
+            label: "new",
+            value: "new",
+            colour: 'pink',
+          })}
+              />         
+            </Section>
+          });
+  }
+
+  renderButtons(buttons) {
+    return buttons.map(button => {
+      return <Key key={button.value} text={button.label} handleKeyPress={() => this.handleKeyPress(button.value)} colour={button.colour} />
     });
   }
 
@@ -84,6 +119,14 @@ export default class KeyboardScreen extends React.Component {
   handleClear = () => {
     return this.setState({text: ""});
   }
+
+  handleAddButtonToSection = (sectionId, button) => {
+    const sectionToUpdate = this.state.sections.find(section => section.id === sectionId);
+    const sections = {...this.state.sections};
+    sectionToUpdate.buttons.push(button);
+    this.setState({});
+    console.log(sectionToUpdate.buttons);
+  }
 }
 
 const styles = StyleSheet.create({
@@ -97,12 +140,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     padding: 20,
     minHeight: 100,
-  },
-  section: {
-    paddingBottom: 20,
-    flex: 1,
-    flexDirection: 'row',
-    flexWrap: 'wrap',
   },
   columnsWrapper: {
     flexDirection: 'row',
