@@ -23,7 +23,7 @@ export default class KeyboardScreen extends React.Component {
 		super(props);
 		this.state = {
 			editMode: false,
-      buttonsPerRow: 6,
+			buttonsPerRow: 6,
 			text: '',
 			letters: [
 				'a',
@@ -53,11 +53,12 @@ export default class KeyboardScreen extends React.Component {
 				'y',
 				'z'
 			],
-      words: ['Yes','No','Pain']
+			words: [ 'Yes', 'No', 'Pain' ]
 		};
 	}
 
 	render() {
+		console.log(this.state.buttonsPerRow);
 		return (
 			<View style={styles.container}>
 				<View style={styles.textWrapper}>
@@ -65,7 +66,7 @@ export default class KeyboardScreen extends React.Component {
 						<Text style={styles.text}>{this.state.text}</Text>
 						<View style={styles.clearWrapper}>
 							<Icon.Ionicons
-								name="ios-remove-circle-outline"
+								name="ios-arrow-dropleft"
 								size={72}
 								onPress={this.handleBack}
 								style={{ marginRight: 10 }}
@@ -74,17 +75,18 @@ export default class KeyboardScreen extends React.Component {
 						</View>
 					</View>
 				</View>
-        {this.renderEditMode()}
-				<ScrollView scrollEnabled={! this.state.editMode} contentContainerStyle={styles.contentContainer}>
-				{this.renderButtons()}
+				{this.renderEditMode()}
+				<ScrollView scrollEnabled={!this.state.editMode} contentContainerStyle={styles.contentContainer}>
+					{this.renderButtons()}
 				</ScrollView>
 				<View style={styles.newButton}>
 					<Icon.Ionicons
 						name="ios-add-circle-outline"
 						size={72}
 						onPress={() => this.handleButtonsPerRow(1)}
+						style={{marginRight: 10}}
 					/>
-          			<Icon.Ionicons
+					<Icon.Ionicons
 						name="ios-remove-circle-outline"
 						size={72}
 						onPress={() => this.handleButtonsPerRow(-1)}
@@ -99,47 +101,46 @@ export default class KeyboardScreen extends React.Component {
 			return this.renderButton(letter, index);
 		});
 
-    const words = this.state.words.map((word, index) => {
+		const words = this.state.words.map((word, index) => {
 			return this.renderButton(word, index, 'black');
 		});
 
 		return (
-      <View>
-      	<SortableGrid
-				blockTransitionDuration={400}
-				activeBlockCenteringDuration={200}
-				itemsPerRow={this.state.buttonsPerRow}
-				dragActivationTreshold={0}
-				onDragRelease={this.handleDragRelease}
-				onDragStart={this.handleDragStart}
-        onPress={this.handleKeyPress}
-			>
-				{letters}
-			</SortableGrid>
-      <SortableGrid
-				blockTransitionDuration={400}
-				activeBlockCenteringDuration={200}
-				itemsPerRow={this.state.buttonsPerRow}
-				dragActivationTreshold={0}
-				onDragRelease={this.handleDragRelease}
-				onDragStart={this.handleDragStart}
-        onPress={this.handleKeyPress}
-			>
-				{words}
-			</SortableGrid>
-      </View>
+			<View>
+				<SortableGrid
+					blockTransitionDuration={400}
+					activeBlockCenteringDuration={200}
+					itemsPerRow={this.state.buttonsPerRow}
+					dragActivationTreshold={0}
+					onDragRelease={this.handleDragRelease}
+					onDragStart={this.handleDragStart}
+					onPress={this.handleKeyPress}
+				>
+					{letters}
+				</SortableGrid>
+				<SortableGrid
+					blockTransitionDuration={400}
+					activeBlockCenteringDuration={200}
+					itemsPerRow={this.state.buttonsPerRow}
+					dragActivationTreshold={0}
+					onDragRelease={this.handleDragRelease}
+					onDragStart={this.handleDragStart}
+					onPress={this.handleKeyPress}
+				>
+					{words}
+				</SortableGrid>
+			</View>
 		);
 	}
 
-  handleDragStart = (itemOrder) => {
+	handleDragStart = (itemOrder) => {
 		console.log('Some block is being dragged now!');
-    this.setState({editMode: true});
-  }
+		this.setState({ editMode: true });
+	};
 
-  handleDragRelease = (itemOrder) => {
-    this.setState({editMode: false});
+	handleDragRelease = (itemOrder) => {
 		console.log('Drag was released, the blocks are in the following order: ', itemOrder);
-  }
+	};
 
 	renderEditMode = () => {
 		if (!this.state.editMode) {
@@ -164,9 +165,9 @@ export default class KeyboardScreen extends React.Component {
 		}));
 	};
 
-  handleButtonsPerRow = (amount) => {
+	handleButtonsPerRow = (amount) => {
 		return this.setState((prevState) => ({
-			buttonsPerRow: prevState.buttonsPerRow + amount,
+			buttonsPerRow: prevState.buttonsPerRow + amount
 		}));
 	};
 
@@ -186,18 +187,18 @@ export default class KeyboardScreen extends React.Component {
 		return this.setState((prevState) => ({ text: '' }));
 	};
 
-	renderButton(button, index, colour = 'blue'){
+	renderButton(button, index, colour = 'blue') {
 		return (
 			<Key
 				key={index}
 				label={button}
-        disabled={this.state.editMode}
+				disabled={this.state.editMode}
 				handleKeyPress={() => this.handleKeyPress(button)}
 				handleLongPress={this.handleLongPress}
-        colour={colour}
+				colour={colour}
 			/>
 		);
-	};
+	}
 
 	handleAddButton = (button) => {
 		const sectionToUpdate = this.state.sections.find((section) => section.id === sectionId);
@@ -226,7 +227,7 @@ const styles = StyleSheet.create({
 		flexDirection: 'row'
 	},
 	text: {
-		fontSize: 30,
+		fontSize: 36,
 		flex: 1
 	},
 	contentContainer: {
@@ -236,11 +237,11 @@ const styles = StyleSheet.create({
 		position: 'absolute',
 		right: 10,
 		bottom: 10,
-		flexDirection: 'row',
+		flexDirection: 'row'
 	},
 	editModeStyle: {
 		padding: 20,
-    backgroundColor: 'blue',
+		backgroundColor: 'blue',
 		flex: 1,
 		flexDirection: 'row',
 		justifyContent: 'space-between'
