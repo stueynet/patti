@@ -7,10 +7,10 @@ import Colors from '../constants/Colors';
 export default class Key extends React.Component {
 	render() {
 		const fontSize = this.getFontSize();
-
+        console.log(this.props.disabled);
 		return (
 			<TouchableOpacity
-                disabled={! this.props.disabled}
+                disabled={this.props.disabled}
 				style={[ styles.container, { backgroundColor: this.props.colour } ]}
 				onPress={this.props.handleKeyPress}
 				onLongPress={this.props.handleLongPress}
@@ -28,7 +28,8 @@ export default class Key extends React.Component {
 Key.defaultProps = {
 	text: '???',
 	colour: 'blue',
-	type: 'default'
+	type: 'default',
+    disabled: false,
 };
 
 const styles = StyleSheet.create({

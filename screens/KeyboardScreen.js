@@ -24,7 +24,7 @@ export default class KeyboardScreen extends React.Component {
 		this.state = {
 			editMode: false,
 			text: '',
-			buttons: [
+			letters: [
 				'a',
 				'b',
 				'c',
@@ -51,7 +51,8 @@ export default class KeyboardScreen extends React.Component {
 				'x',
 				'y',
 				'z'
-			]
+			],
+      words: ['Yes','No','Pain']
 		};
 	}
 
@@ -74,7 +75,7 @@ export default class KeyboardScreen extends React.Component {
 				</View>
         {this.renderEditMode()}
 				<ScrollView scrollEnabled={! this.state.editMode} contentContainerStyle={styles.contentContainer}>
-					{this.renderButtons()}
+				{this.renderButtons()}
 				</ScrollView>
 				<View style={styles.newButton}>
 					<Icon.Ionicons
@@ -88,11 +89,28 @@ export default class KeyboardScreen extends React.Component {
 	}
 
 	renderButtons() {
-		const buttons = this.state.buttons.map((button, index) => {
-			return this.renderButton(button, index);
+		const letters = this.state.letters.map((letter, index) => {
+			return this.renderButton(letter, index);
 		});
+
+    const words = this.state.words.map((word, index) => {
+			return this.renderButton(word, index, 'black');
+		});
+
 		return (
-			<SortableGrid
+      <View>
+      	<SortableGrid
+				blockTransitionDuration={400}
+				activeBlockCenteringDuration={200}
+				itemsPerRow={7}
+				dragActivationTreshold={200}
+				onDragRelease={this.handleDragRelease}
+				onDragStart={this.handleDragStart}
+        onPress={this.handleKeyPress}
+			>
+				{letters}
+			</SortableGrid>
+      <SortableGrid
 				blockTransitionDuration={400}
 				activeBlockCenteringDuration={200}
 				itemsPerRow={4}
@@ -101,8 +119,9 @@ export default class KeyboardScreen extends React.Component {
 				onDragStart={this.handleDragStart}
         onPress={this.handleKeyPress}
 			>
-				{buttons}
+				{words}
 			</SortableGrid>
+      </View>
 		);
 	}
 
@@ -155,7 +174,7 @@ export default class KeyboardScreen extends React.Component {
 		return this.setState((prevState) => ({ text: '' }));
 	};
 
-	renderButton = (button, index) => {
+	renderButton = (button, index, colour = 'blue') => {
     console.log(this.state.editMode);
 		return (
 			<Key
@@ -164,6 +183,7 @@ export default class KeyboardScreen extends React.Component {
         disabled={this.state.editMode}
 				handleKeyPress={() => this.handleKeyPress(button)}
 				handleLongPress={this.handleLongPress}
+        colour={colour}
 			/>
 		);
 	};
