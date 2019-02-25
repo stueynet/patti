@@ -18,7 +18,6 @@ export default class Key extends React.Component {
                 disabled={this.props.disabled}
 				style={[ styles.container, { backgroundColor: this.props.colour, opacity } ]}
 				onPress={this.props.handleKeyPress}
-				onLongPress={this.props.handleLongPress}
 			>
                 <Text style={[ styles.default, { fontSize } ]}>{this.props.label}</Text>
 			</TouchableOpacity>

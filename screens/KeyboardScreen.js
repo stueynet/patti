@@ -172,12 +172,6 @@ export default class KeyboardScreen extends React.Component {
 		return this.setState({ text: this.state.text + ' ' + text });
 	};
 
-	handleLongPress = () => {
-		return this.setState((prevState) => ({
-			editMode: !prevState.editMode
-		}));
-	};
-
 	handleButtonsPerRow = (amount) => {
 		return this.setState((prevState) => ({
 			buttonsPerRow: prevState.buttonsPerRow + amount
@@ -213,7 +207,6 @@ export default class KeyboardScreen extends React.Component {
 				label={button}
 				disabled={this.state.editMode}
 				handleKeyPress={() => this.handleKeyPress(button)}
-				handleLongPress={this.handleLongPress}
 				colour={colour}
 			/>
 		);
