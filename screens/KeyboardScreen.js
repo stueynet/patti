@@ -84,12 +84,7 @@ export default class KeyboardScreen extends React.Component {
 						size={72}
 						onPress={() => this.handleButtonsPerRow(1)}
 					/>
-          <Icon.Ionicons
-						name="ios-remove-circle-outline"
-						size={72}
-						onPress={() => this.handleButtonsPerRow(-1)}
-					/>
-           <Icon.Ionicons
+          			<Icon.Ionicons
 						name="ios-remove-circle-outline"
 						size={72}
 						onPress={() => this.handleButtonsPerRow(-1)}
@@ -240,7 +235,8 @@ const styles = StyleSheet.create({
 	newButton: {
 		position: 'absolute',
 		right: 10,
-		bottom: 10
+		bottom: 10,
+		flexDirection: 'row',
 	},
 	editModeStyle: {
 		padding: 20,

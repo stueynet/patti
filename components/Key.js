@@ -8,7 +8,6 @@ export default class Key extends React.Component {
 
 	render() {
 		const fontSize = this.getFontSize();
-        console.log(this.props.disabled);
 		return (
 			<TouchableOpacity
                 disabled={this.props.disabled}
@@ -22,7 +21,18 @@ export default class Key extends React.Component {
 	}
 
 	getFontSize() {
-		size = 30 * (1 / (this.props.label.length / 5));
+		const length = this.props.label.length;
+		let adjust = 1;
+
+		if (length > 4) {
+			adjust = length > 4 ? 1 / (length / 5) : 1;
+		} 
+
+		if (length <= 3) {
+			adjust = 2;
+		}
+
+		size = 30 * adjust;
 		return size > 64 ? 64 : size;
 	}
 }
