@@ -5609,10 +5609,9 @@ react-native-screens@1.0.0-alpha.22, "react-native-screens@^1.0.0 || ^1.0.0-alph
   resolved "https://registry.yarnpkg.com/react-native-screens/-/react-native-screens-1.0.0-alpha.22.tgz#7a120377b52aa9bbb94d0b8541a014026be9289b"
   integrity sha512-kSyAt0AeVU6N7ZonfV6dP6iZF8B7Bce+tk3eujXhzBGsLg0VSLnU7uE9VqJF0xdQrHR91ZjGgVMieo/8df9KTA==
 
-react-native-sortable-grid@^2.0.0:
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/react-native-sortable-grid/-/react-native-sortable-grid-2.0.0.tgz#61129a4614a93b6d3ed1693a7485a036f986ce53"
-  integrity sha1-YRKaRhSpO20+0Wk6dIWgNvmGzlM=
+"react-native-sortable-grid@https://github.com/ollija/react-native-sortable-grid":
+  version "2.0.1"
+  resolved "https://github.com/ollija/react-native-sortable-grid#208ef32a261f1c7429d0559bb3aad91d929f8e31"
 
 react-native-svg@8.0.10:
   version "8.0.10"

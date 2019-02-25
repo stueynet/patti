@@ -23,6 +23,7 @@ export default class KeyboardScreen extends React.Component {
 		super(props);
 		this.state = {
 			editMode: false,
+      buttonsPerRow: 6,
 			text: '',
 			letters: [
 				'a',
@@ -81,7 +82,17 @@ export default class KeyboardScreen extends React.Component {
 					<Icon.Ionicons
 						name="ios-add-circle-outline"
 						size={72}
-						onPress={() => this.handleAddButton(newButton)}
+						onPress={() => this.handleButtonsPerRow(1)}
+					/>
+          <Icon.Ionicons
+						name="ios-remove-circle-outline"
+						size={72}
+						onPress={() => this.handleButtonsPerRow(-1)}
+					/>
+           <Icon.Ionicons
+						name="ios-remove-circle-outline"
+						size={72}
+						onPress={() => this.handleButtonsPerRow(-1)}
 					/>
 				</View>
 			</View>
@@ -102,8 +113,8 @@ export default class KeyboardScreen extends React.Component {
       	<SortableGrid
 				blockTransitionDuration={400}
 				activeBlockCenteringDuration={200}
-				itemsPerRow={7}
-				dragActivationTreshold={200}
+				itemsPerRow={this.state.buttonsPerRow}
+				dragActivationTreshold={0}
 				onDragRelease={this.handleDragRelease}
 				onDragStart={this.handleDragStart}
         onPress={this.handleKeyPress}
@@ -113,8 +124,8 @@ export default class KeyboardScreen extends React.Component {
       <SortableGrid
 				blockTransitionDuration={400}
 				activeBlockCenteringDuration={200}
-				itemsPerRow={4}
-				dragActivationTreshold={200}
+				itemsPerRow={this.state.buttonsPerRow}
+				dragActivationTreshold={0}
 				onDragRelease={this.handleDragRelease}
 				onDragStart={this.handleDragStart}
         onPress={this.handleKeyPress}
@@ -141,7 +152,7 @@ export default class KeyboardScreen extends React.Component {
 		}
 
 		return (
-			<View style={styles.editMode}>
+			<View style={styles.editModeStyle}>
 				<Text>You are currently editing the button layout</Text>
 				<Icon.Ionicons name="ios-close-circle-outline" size={32} onPress={this.handleDisableEditMode} />
 			</View>
@@ -155,6 +166,12 @@ export default class KeyboardScreen extends React.Component {
 	handleLongPress = () => {
 		return this.setState((prevState) => ({
 			editMode: !prevState.editMode
+		}));
+	};
+
+  handleButtonsPerRow = (amount) => {
+		return this.setState((prevState) => ({
+			buttonsPerRow: prevState.buttonsPerRow + amount,
 		}));
 	};
 
@@ -174,8 +191,7 @@ export default class KeyboardScreen extends React.Component {
 		return this.setState((prevState) => ({ text: '' }));
 	};
 
-	renderButton = (button, index, colour = 'blue') => {
-    console.log(this.state.editMode);
+	renderButton(button, index, colour = 'blue'){
 		return (
 			<Key
 				key={index}
@@ -226,7 +242,7 @@ const styles = StyleSheet.create({
 		right: 10,
 		bottom: 10
 	},
-	editMode: {
+	editModeStyle: {
 		padding: 20,
     backgroundColor: 'blue',
 		flex: 1,

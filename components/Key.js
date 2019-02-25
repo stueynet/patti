@@ -5,6 +5,7 @@ import { Icon } from 'expo';
 import Colors from '../constants/Colors';
 
 export default class Key extends React.Component {
+
 	render() {
 		const fontSize = this.getFontSize();
         console.log(this.props.disabled);
