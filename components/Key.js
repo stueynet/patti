@@ -28,13 +28,13 @@ export default class Key extends React.Component {
 		const length = this.props.label.length;
 		let adjust = 1;
 
-		if (length > 4) {
-			adjust = length > 4 ? 1 / (length / 5) : 1;
+		if (length > 1) {
+			adjust = 1.5;
 		} 
 
-		if (length <= 3) {
-			adjust = 1.7;
-		}
+		// if (length <= 3) {
+		// 	adjust = 1.7;
+		// }
 
 		size = 30 * adjust;
 		return size > 64 ? 64 : size;
@@ -49,11 +49,11 @@ Key.defaultProps = {
 
 const styles = StyleSheet.create({
 	container: {
-         flex: 1,
-            margin: 8,
-            borderRadius: 20,
-            justifyContent: 'center',
-            alignItems: 'center'
+        flex: 1,
+		margin: 8,
+		borderRadius: 20,
+		justifyContent: 'center',
+		alignItems: 'center'
 		// alignItems: 'center',
 		// justifyContent: 'center',
 		// aspectRatio: 1,

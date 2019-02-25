@@ -53,13 +53,12 @@ export default class KeyboardScreen extends React.Component {
 				'y',
 				'z'
 			],
-			words: [ 'Yes', 'No', 'Pain' ],
+			words: [ 'Yes', 'No', 'Pain','Breathing' ],
 			numbers: [ '1', '2', '3', '4', '5', '6', '7', '8', '9', '0' ]
 		};
 	}
 
 	render() {
-		console.log(this.state.buttonsPerRow);
 		return (
 			<View style={styles.container}>
 				<View style={styles.textWrapper}>
@@ -115,7 +114,9 @@ export default class KeyboardScreen extends React.Component {
 				<SortableGrid
 					blockTransitionDuration={400}
 					activeBlockCenteringDuration={200}
-					itemsPerRow={5}
+					itemsPerRow={4}
+					itemWidth={160}
+					itemHeight={120}
 					dragActivationTreshold={0}
 					onDragRelease={this.handleDragRelease}
 					onDragStart={this.handleDragStart}
@@ -150,12 +151,11 @@ export default class KeyboardScreen extends React.Component {
 	}
 
 	handleDragStart = (itemOrder) => {
-		console.log('Some block is being dragged now!');
 		this.setState({ editMode: true });
 	};
 
 	handleDragRelease = (itemOrder) => {
-		console.log('Drag was released, the blocks are in the following order: ', itemOrder);
+		//console.log('Drag was released, the blocks are in the following order: ', itemOrder);
 	};
 
 	renderEditMode = () => {
