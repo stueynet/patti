@@ -6,12 +6,17 @@ import Colors from '../constants/Colors';
 
 export default class Key extends React.Component {
 
+	shouldComponentUpdate (nextProps, nextState) {
+		return nextProps.disabled !== this.props.disabled;
+	}
+
 	render() {
 		const fontSize = this.getFontSize();
+		const opacity = this.props.disabled ? 0.5 : 1;
 		return (
 			<TouchableOpacity
                 disabled={this.props.disabled}
-				style={[ styles.container, { backgroundColor: this.props.colour } ]}
+				style={[ styles.container, { backgroundColor: this.props.colour, opacity } ]}
 				onPress={this.props.handleKeyPress}
 				onLongPress={this.props.handleLongPress}
 			>
@@ -29,7 +34,7 @@ export default class Key extends React.Component {
 		} 
 
 		if (length <= 3) {
-			adjust = 2;
+			adjust = 1.7;
 		}
 
 		size = 30 * adjust;

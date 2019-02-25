@@ -53,7 +53,8 @@ export default class KeyboardScreen extends React.Component {
 				'y',
 				'z'
 			],
-			words: [ 'Yes', 'No', 'Pain' ]
+			words: [ 'Yes', 'No', 'Pain' ],
+			numbers: [ '1', '2', '3', '4', '5', '6', '7', '8', '9', '0' ]
 		};
 	}
 
@@ -80,17 +81,17 @@ export default class KeyboardScreen extends React.Component {
 					{this.renderButtons()}
 				</ScrollView>
 				<View style={styles.newButton}>
-					<Icon.Ionicons
+					{/* <Icon.Ionicons
 						name="ios-add-circle-outline"
 						size={72}
 						onPress={() => this.handleButtonsPerRow(1)}
-						style={{marginRight: 10}}
+						style={{ marginRight: 10 }}
 					/>
 					<Icon.Ionicons
 						name="ios-remove-circle-outline"
 						size={72}
 						onPress={() => this.handleButtonsPerRow(-1)}
-					/>
+					/> */}
 				</View>
 			</View>
 		);
@@ -99,6 +100,10 @@ export default class KeyboardScreen extends React.Component {
 	renderButtons() {
 		const letters = this.state.letters.map((letter, index) => {
 			return this.renderButton(letter, index);
+		});
+
+		const numbers = this.state.numbers.map((number, index) => {
+			return this.renderButton(number, index, 'grey');
 		});
 
 		const words = this.state.words.map((word, index) => {
@@ -110,7 +115,18 @@ export default class KeyboardScreen extends React.Component {
 				<SortableGrid
 					blockTransitionDuration={400}
 					activeBlockCenteringDuration={200}
-					itemsPerRow={this.state.buttonsPerRow}
+					itemsPerRow={5}
+					dragActivationTreshold={0}
+					onDragRelease={this.handleDragRelease}
+					onDragStart={this.handleDragStart}
+					onPress={this.handleKeyPress}
+				>
+					{words}
+				</SortableGrid>
+				<SortableGrid
+					blockTransitionDuration={400}
+					activeBlockCenteringDuration={200}
+					itemsPerRow={7}
 					dragActivationTreshold={0}
 					onDragRelease={this.handleDragRelease}
 					onDragStart={this.handleDragStart}
@@ -121,13 +137,13 @@ export default class KeyboardScreen extends React.Component {
 				<SortableGrid
 					blockTransitionDuration={400}
 					activeBlockCenteringDuration={200}
-					itemsPerRow={this.state.buttonsPerRow}
+					itemsPerRow={10}
 					dragActivationTreshold={0}
 					onDragRelease={this.handleDragRelease}
 					onDragStart={this.handleDragStart}
 					onPress={this.handleKeyPress}
 				>
-					{words}
+					{numbers}
 				</SortableGrid>
 			</View>
 		);
@@ -143,16 +159,13 @@ export default class KeyboardScreen extends React.Component {
 	};
 
 	renderEditMode = () => {
-		if (!this.state.editMode) {
-			return null;
-		}
-
-		return (
-			<View style={styles.editModeStyle}>
-				<Text>You are currently editing the button layout</Text>
-				<Icon.Ionicons name="ios-close-circle-outline" size={32} onPress={this.handleDisableEditMode} />
-			</View>
+		const button = this.state.editMode ? (
+			<Icon.Ionicons color="green" name="ios-checkmark-circle" size={128} onPress={this.handleDisableEditMode} />
+		) : (
+			<Icon.Ionicons name="ios-cog" size={72} onPress={this.handleEnableEditMode} />
 		);
+
+		return <View style={styles.editModeStyle}>{button}</View>;
 	};
 
 	handleKeyPress = (text) => {
@@ -174,6 +187,12 @@ export default class KeyboardScreen extends React.Component {
 	handleDisableEditMode = () => {
 		return this.setState((prevState) => ({
 			editMode: false
+		}));
+	};
+
+	handleEnableEditMode = () => {
+		return this.setState((prevState) => ({
+			editMode: true
 		}));
 	};
 
@@ -240,10 +259,9 @@ const styles = StyleSheet.create({
 		flexDirection: 'row'
 	},
 	editModeStyle: {
-		padding: 20,
-		backgroundColor: 'blue',
-		flex: 1,
-		flexDirection: 'row',
-		justifyContent: 'space-between'
+		position: 'absolute',
+		left: 20,
+		bottom: 20,
+		zIndex: 1
 	}
 });
